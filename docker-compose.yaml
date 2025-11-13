@@ -1,0 +1,38 @@
+services:
+  rasa:
+    build:
+      context: .
+      dockerfile: docker/rasa/Dockerfile
+      args:
+        RASA_LICENSE: ${RASA_LICENSE}
+    environment:
+      - RASA_LICENSE=${RASA_LICENSE}
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./rasa_bot:/app
+    depends_on:
+      - actions
+
+  actions:
+    build:
+      context: .
+      dockerfile: docker/actions/Dockerfile
+      args:
+        RASA_LICENSE: ${RASA_LICENSE}
+    environment:
+      - RASA_LICENSE=${RASA_LICENSE}
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./rasa_bot:/app
+
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+    environment:
+      - RASA_URL=http://rasa:5005/webhooks/rest/webhook
+    depends_on:
+      - rasa

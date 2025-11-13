@@ -1,0 +1,18 @@
+# Never commit env files
+.env
+*.env
+
+# Python / Rasa
+__pycache__/
+*.pyc
+.rasa/
+
+# Virtualenvs
+.venv/
+venv/
+
+# macOS artifacts
+.DS_Store
+
+# Docker
+*.log

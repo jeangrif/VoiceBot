@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  rasa:
+    image: ghcr.io/jeangrif/voicebotrasa-rasa:latest
+    ports:
+      - "5005:5005"
+    env_file:
+      - .env.rasa
+    depends_on:
+      - actions
+
+  actions:
+    image: ghcr.io/jeangrif/voicebotrasa-actions:latest
+    ports:
+      - "5055:5055"
+    env_file:
+      - .env.actions
+
+  client:
+    image: ghcr.io/jeangrif/voicebotrasa-client:latest
+    ports:
+      - "8080:80"
+    env_file:
+      - .env.client
+    depends_on:
+      - rasa
