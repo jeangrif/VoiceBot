@@ -32,30 +32,16 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # -------- RASA --------
-      - name: Build & push Rasa image
+      - name: Build & push Rasa+Actions image
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./docker/rasa/Dockerfile
+          file: ./docker/rasa/Dockerfile  # ton nouveau Dockerfile unifié
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ env.IMAGE_PREFIX }}-rasa:latest
-            ${{ env.IMAGE_PREFIX }}-rasa:${{ github.sha }}
-          build-args: |
-            RASA_LICENSE=${{ secrets.RASA_LICENSE }}
-
-      # -------- ACTIONS --------
-      - name: Build & push Actions image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./docker/actions/Dockerfile
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ${{ env.IMAGE_PREFIX }}-actions:latest
-            ${{ env.IMAGE_PREFIX }}-actions:${{ github.sha }}
+            ${{ env.IMAGE_PREFIX }}:latest
+            ${{ env.IMAGE_PREFIX }}:${{ github.sha }}
           build-args: |
             RASA_LICENSE=${{ secrets.RASA_LICENSE }}
 
