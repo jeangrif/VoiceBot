@@ -41,6 +41,8 @@ jobs:
           tags: |
             ${{ env.IMAGE_PREFIX }}-rasa:latest
             ${{ env.IMAGE_PREFIX }}-rasa:${{ github.sha }}
+          build-args: |
+            RASA_LICENSE=${{ secrets.RASA_LICENSE }}
 
       # -------- ACTIONS --------
       - name: Build & push Actions image
@@ -52,6 +54,8 @@ jobs:
           tags: |
             ${{ env.IMAGE_PREFIX }}-actions:latest
             ${{ env.IMAGE_PREFIX }}-actions:${{ github.sha }}
+          build-args: |
+            RASA_LICENSE=${{ secrets.RASA_LICENSE }}
 
       # -------- CLIENT (front) --------
       - name: Build & push Client image
