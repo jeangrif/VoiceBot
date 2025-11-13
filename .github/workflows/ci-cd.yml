@@ -35,7 +35,7 @@ jobs:
       - name: Build & push Rasa image
         uses: docker/build-push-action@v6
         with:
-          context: ./docker/rasa          # 👉 adapte si ton Dockerfile n'est pas là
+          context: .          # 👉 adapte si ton Dockerfile n'est pas là
           file: ./docker/rasa/Dockerfile  # 👉 adapte le chemin si besoin
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
@@ -46,7 +46,7 @@ jobs:
       - name: Build & push Actions image
         uses: docker/build-push-action@v6
         with:
-          context: ./docker/actions          # 👉 adapte si nécessaire
+          context: .   # 👉 adapte si nécessaire
           file: ./docker/actions/Dockerfile  # 👉 idem
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
@@ -57,7 +57,7 @@ jobs:
       - name: Build & push Client image
         uses: docker/build-push-action@v6
         with:
-          context: ./docker/client          # 👉 adapte
+          context: .       # 👉 adapte
           file: ./docker/client/Dockerfile
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
